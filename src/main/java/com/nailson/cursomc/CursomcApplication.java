@@ -65,8 +65,8 @@ public class CursomcApplication implements CommandLineRunner{
 		est1.getCidades().addAll(Arrays.asList(cid1, cid2));
 		est2.getCidades().addAll(Arrays.asList(cid3));
 		
-		cidadeRepository.saveAll(Arrays.asList(cid1,cid2,cid3));
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
+		cidadeRepository.saveAll(Arrays.asList(cid1,cid2,cid3));
 	}
 
 }
