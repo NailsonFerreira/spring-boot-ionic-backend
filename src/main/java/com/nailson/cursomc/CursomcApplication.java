@@ -1,5 +1,6 @@
 package com.nailson.cursomc;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,11 @@ import com.nailson.cursomc.domain.Cidade;
 import com.nailson.cursomc.domain.Cliente;
 import com.nailson.cursomc.domain.Endereco;
 import com.nailson.cursomc.domain.Estado;
+import com.nailson.cursomc.domain.Pagamento;
+import com.nailson.cursomc.domain.PagamentoComCartao;
+import com.nailson.cursomc.domain.Pedido;
 import com.nailson.cursomc.domain.Produto;
+import com.nailson.cursomc.domain.enums.EstadoPagamento;
 import com.nailson.cursomc.domain.enums.TipoCliente;
 import com.nailson.cursomc.repositories.CategoriaRepository;
 import com.nailson.cursomc.repositories.CidadeRepository;
@@ -91,6 +96,13 @@ public class CursomcApplication implements CommandLineRunner{
 		
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(e1,e2));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		Pedido pedi1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
+		Pedido pedi2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
+		
+		Pagamento pagton1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, pedi1, 6);
 	}
 
 }
