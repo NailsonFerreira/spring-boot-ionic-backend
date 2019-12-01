@@ -13,32 +13,18 @@ import com.nailson.cursomc.services.ClienteService;
 import javassist.tools.rmi.ObjectNotFoundException;
 
 @RestController
-@RequestMapping(value = "/clientes")
+@RequestMapping(value = "/cliente")
 public class ClienteResouce {
 
 	@Autowired
 	private ClienteService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> listar(@PathVariable Integer id) throws ObjectNotFoundException {
+	public ResponseEntity<Cliente> find(@PathVariable Integer id) throws ObjectNotFoundException {
 
-		Cliente obj = service.buscar(id);
+		Cliente obj = service.find(id);
 
 		return ResponseEntity.ok().body(obj);
 	}
-
-	
-//	@RequestMapping(method = RequestMethod.GET)
-//	public ResponseEntity<?> inserir() {
-//		
-//		Categoria ct1 = new Categoria(null,"Papelaria");
-//		Categoria ct2 = new Categoria(null,"Eletronicos");
-//		List<Categoria> cates = new ArrayList<>();
-//		cates.add(ct1);
-//		cates.add(ct2);
-//		
-//		service.inserir(cates);
-//		return ResponseEntity.ok().body(cates);
-//	}
 
 }

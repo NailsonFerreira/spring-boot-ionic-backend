@@ -24,9 +24,9 @@ public class CategoriaResouce {
 	private CategoriaService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> listar(@PathVariable Integer id) throws ObjectNotFoundException {
+	public ResponseEntity<Categoria> find(@PathVariable Integer id) throws ObjectNotFoundException {
 
-		Categoria obj = service.buscar(id);
+		Categoria obj = service.find(id);
 
 		return ResponseEntity.ok().body(obj);
 	}
@@ -39,17 +39,11 @@ public class CategoriaResouce {
 		return ResponseEntity.created(uri).build();
 	}
 	
-//	@RequestMapping(method = RequestMethod.GET)
-//	public ResponseEntity<?> inserir() {
-//		
-//		Categoria ct1 = new Categoria(null,"Papelaria");
-//		Categoria ct2 = new Categoria(null,"Eletronicos");
-//		List<Categoria> cates = new ArrayList<>();
-//		cates.add(ct1);
-//		cates.add(ct2);
-//		
-//		service.inserir(cates);
-//		return ResponseEntity.ok().body(cates);
-//	}
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id){
+		obj.setId(id);
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
+	}
 
 }

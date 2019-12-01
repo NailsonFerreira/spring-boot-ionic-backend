@@ -13,16 +13,16 @@ import com.nailson.cursomc.services.PedidoService;
 import javassist.tools.rmi.ObjectNotFoundException;
 
 @RestController
-@RequestMapping(value = "/pedidos")
+@RequestMapping(value = "/pedido")
 public class PedidoResouce {
 
 	@Autowired
 	private PedidoService service;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> listar(@PathVariable Integer id) throws ObjectNotFoundException {
+	public ResponseEntity<Pedido> find(@PathVariable Integer id) throws ObjectNotFoundException {
 
-		Pedido obj = service.buscar(id);
+		Pedido obj = service.find(id);
 
 		return ResponseEntity.ok().body(obj);
 	}
