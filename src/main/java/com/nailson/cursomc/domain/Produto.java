@@ -2,7 +2,9 @@ package com.nailson.cursomc.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,6 +33,8 @@ public class Produto implements Serializable {
 	@JoinTable(name="PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name="produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
 	private List<Categoria> categorias = new ArrayList<>();
 
+	private Set<ItemPedido> itens = new HashSet<>();
+	
 	public Produto(Integer id, String nome, Double preco) {
 		super();
 		this.id = id;
@@ -43,6 +47,13 @@ public class Produto implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	public List<Pedido> getPedidos(){
+		List<Pedido> pedidos = new ArrayList<>();
+		for(ItemPedido x : itens) {
+			pedidos.add(x.getPedido());
+		}
+		return pedidos;
+	}
 	public Integer getId() {
 		return id;
 	}

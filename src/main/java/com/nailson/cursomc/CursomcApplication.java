@@ -14,6 +14,7 @@ import com.nailson.cursomc.domain.Cliente;
 import com.nailson.cursomc.domain.Endereco;
 import com.nailson.cursomc.domain.Estado;
 import com.nailson.cursomc.domain.Pagamento;
+import com.nailson.cursomc.domain.PagamentoComBoleto;
 import com.nailson.cursomc.domain.PagamentoComCartao;
 import com.nailson.cursomc.domain.Pedido;
 import com.nailson.cursomc.domain.Produto;
@@ -24,7 +25,10 @@ import com.nailson.cursomc.repositories.CidadeRepository;
 import com.nailson.cursomc.repositories.ClienteRepository;
 import com.nailson.cursomc.repositories.EnderecoRepository;
 import com.nailson.cursomc.repositories.EstadoRepository;
+import com.nailson.cursomc.repositories.PagamentoRepository;
 import com.nailson.cursomc.repositories.ProdutoRepository;
+import com.nailson.cursomc.repositories.PedidoRepository;
+
 
 @SpringBootApplication
 public class CursomcApplication implements CommandLineRunner{
@@ -46,6 +50,12 @@ public class CursomcApplication implements CommandLineRunner{
 	
 	@Autowired
 	EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	PedidoRepository pedidoRepository;
+	
+	@Autowired 
+	PagamentoRepository pagamentoRepository;
 	
 	
 	public static void main(String[] args) {
@@ -102,7 +112,16 @@ public class CursomcApplication implements CommandLineRunner{
 		Pedido pedi1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
 		Pedido pedi2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
 		
-		Pagamento pagton1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, pedi1, 6);
+		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, pedi1, 6);
+		pedi1.setPagamento(pagto1);
+		
+		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, pedi2, sdf.parse("20/10/2017 00:00"), null);
+		pedi2.setPagamento(pagto2);
+		
+		cli1.setPedidos(Arrays.asList(pedi1, pedi2));
+		
+		pedidoRepository.saveAll(Arrays.asList(pedi1, pedi2));
+		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 	}
 
 }
